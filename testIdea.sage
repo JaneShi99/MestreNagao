@@ -180,7 +180,7 @@ def test_wrapper():
         
         print("-----------------------------------------------------------------------------------------------------------")
         
-test_wrapper()
+#test_wrapper()
 
 
 
@@ -190,5 +190,77 @@ test_wrapper()
 Next step: plot the data and see what happens.
 
 '''
+
+def small_rank():
+    curves_to_test = [[1,0,1,-5,-8], [1, -1, 0, -1, 1], [1, -1, 0, -16, 28]]
+    epsilon = 0.25
+    upper_bound = 500000
+    cont_int = 100
+    
+    wp_trivial = {0:0, 1:1, 2:1, 3:1, 4:1}
+    wp_smart_dump2 = {0:0, 1:1, 2:0, 3:2, 4:1}
+    wp_smart_dump3 = {0:0, 1:1, 2:2, 3:0, 4:1}
+    
+    for curve in curves_to_test:
+        plt.clf()         
+        E = EllipticCurve(curve)
+        goal_rank = rank(E)
+        print("Curve is given by",curve)
+        print("Original Mestre-Nagao")
+        original_data, original_time = time_to_converge(curve, cont_int, epsilon, wp_trivial, upper_bound)
+        print("")
+    
+        print("Smart Mestre-Nagao: dump 2")
+        smart_data_2, smart_time_2 = time_to_converge(curve, cont_int, epsilon, wp_smart_dump2, upper_bound)
+        print("")
+    
+        print("Smart Mestre-Nagao: dump 3")
+        smart_data_3, smart_time_3 = time_to_converge(curve, cont_int, epsilon, wp_smart_dump3, upper_bound)
+        
+        '''
+        print("")
+        print("")
+        print("")
+        print("Curve:", curve)
+        print("rank is ", rank(EllipticCurve(curve)))
+        print("")
+        print("Original took ", original_time, " s")
+        print("converged at x = ", original_x)
+        #print(original_data)
+    
+        
+        print("Smart dump 2 took ", smart_time_2, " s")
+        print("converged at x = ", smart_x_2)
+        #print(smart_data_2)
+        
+        
+        print("Smart dump 3 took ", smart_time_3, " s")
+        print("converged at x = ", smart_x_3)
+        #print(smart_data_3)
+        '''
+        
+        fname = f"plot-{datetime.now().strftime('%Y%m%d-%H%M%S')}.png" 
+        
+        data_list = [original_data, smart_data_2, smart_data_3]
+        name_list = ['Original', 'dump 2', 'dump 3']
+        
+        title = f"Elliptic curve given by ({', '.join(map(str, curve))}) with rank {goal_rank}"
+        
+        plot_helper(fname, title, data_list, name_list)
+        
+        print("-----------------------------------------------------------------------------------------------------------")
+        
+small_rank()
+
+
+
+
+'''
+
+Next step: plot the data and see what happens.
+
+'''
+
+
 
 
