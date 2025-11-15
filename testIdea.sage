@@ -194,7 +194,7 @@ Next step: plot the data and see what happens.
 def small_rank():
     curves_to_test = [[1,0,1,-5,-8], [1, -1, 0, -1, 1], [1, -1, 0, -16, 28]]
     epsilon = 0.25
-    upper_bound = 500000
+    upper_bound = 100000
     cont_int = 100
     
     wp_trivial = {0:0, 1:1, 2:1, 3:1, 4:1}
